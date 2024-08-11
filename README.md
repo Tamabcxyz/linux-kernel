@@ -298,3 +298,8 @@ The root filesystem is the filesystem from which the main portion of the running
 ```
 mount | grep " / "
 ```
+
+# Resize virtualbox machine 
+```
+VBoxManage modifyhd YOUR_HARD_DISK.vdi --resize SIZE_IN_MB
+```
