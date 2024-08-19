@@ -96,7 +96,10 @@ Which layers are used by Poky build system?
 BBLAYERS variable present in build/conf/bblayers.conf file list the layers Bitbake tries to find. If bblayers.conf not present when you start the build, the OpenEmbedded build system creates it from bblayers.conf.sample when you source the oe-init-build-env script.           
 Command to find out which layers are present:           
 ```
-bitbake-layer show-layers
+bitbake-layers show-layers
+bitbake-layers show-dependencies
+bitbake-layers show-recipes
+
 ```
 Where to get other layers
 ```
@@ -886,3 +889,28 @@ sudo dd if=rpi-basic-image-raspberrypi3.rpi-sdimg of=/dev/sdb bs=4096 status=pro
 connect with raspberrypi
 minicom -s
 ```
+
+### Hello kernel module in yocto
+Step 1. Create new layer
+```
+cd poky
+bitbake-layers create-layer extra_module
+bitbake-layers add-layer extra_module
+bitbake-layers show-layers
+
+cd extra_module
+cp -rp ../meta-skeleton/recipes-kernel .
+cd recipes-kernel
+rm -rf linux (if don't want to custom compile of linux)
+cd hello-mod
+
+cd to build directory
+vim conf/bblayers.conf
+MACHINE=??? bitbake hello-mod
+MACHINE=??? bitbake -c clean hello-mod
+find . -name "hello*.ko"
+runqemu <machine> nographic
+using tftp to copy .ko file to qemu
+```
+
+

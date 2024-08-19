@@ -303,3 +303,24 @@ mount | grep " / "
 ```
 VBoxManage modifyhd YOUR_HARD_DISK.vdi --resize SIZE_IN_MB
 ```
+# Setup ip for host
+```
+sudo ip addr del 192.168.1.20/24 dev interfaceName
+sudo ip link set dev interfaceName up
+sudo ip route add default via 192.168.1.1
+ip addr show dev interfaceName
+
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+```
+
+# Code kernel
+```
+#include <linux/module.h> : Provides the necessary functions and macros for writing loadable kernel modules (LKMs). (MODULE_LICENSE, MODULE_AUTHOR, module_init,...)
+#include <linux/init.h> : Defines macros and functions related to module initialization and cleanu. (__init, __exit, ...)
+#include <linux/fs.h> : Provides structures and functions for handling the filesystem and file operations (struct file_operations, register_chrdev, unregister_chrdev, ...)
+#include <linux/cdev.h> : this header is crucial for creating and managing character devices in the Linux kernel (struct cdev, cdev_init, cdev_add, cdev_del, ...)
+#include <linux/uaccess.h> : Provides functions for safely transferring data between user space and kernel space (copy_to_user, copy_from_user, ...)
+```
