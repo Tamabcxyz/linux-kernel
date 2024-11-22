@@ -314,6 +314,8 @@ sudo nano /etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 
+
+ref: https://linuxize.com/post/how-to-configure-static-ip-address-on-ubuntu-20-04/
 ```
 
 # Code kernel
