@@ -1,3 +1,33 @@
+# The steps create kernel
+1. ***Create Kernel Image***: The core of the operating system, which includes the kernel and its drivers:
+   - File: vmlinuz (compressed) or bzImage (bootable compressed image).
+   - Purpose: Manages hardware, system resources, and provides core functionalities.
+   - How to Create: Use the make process in the kernel source:       
+      Configure the kernel using ```make menuconfig``` or similar tools.         
+      Build the kernel with ```make```.         
+      Install the kernel image using ```make install```.   
+
+2. ***Create Initial RAM Disk (Initrd/Initramfs)***: A temporary root filesystem used during the early stages of the boot process.        
+   - File: initramfs.img or initrd.img.         
+   - Purpose: Loads kernel modules (e.g., for file systems or hardware) that are not built into the kernel. Mounts the real root filesystem.             
+   - How to Create: Tools like ```mkinitcpio```, ```dracut```, or ```update-initramfs``` can generate the initramfs image. These tools pack necessary kernel modules and scripts into a compressed image.        
+
+3. ***Root Filesystem***: Contains all the files, libraries, and programs necessary for the system to operate after boot.
+   - File/Directory: Typically a directory or image mounted as / (root).         
+   - Purpose: Provides essential system binaries and libraries. Allows the system to function after the kernel hands over control.           
+   - How to Create: Build a root filesystem using tools like debootstrap (for Debian-based systems) or buildroot. Alternatively, use an existing root filesystem or a prebuilt image.           
+
+4. ***Bootloader***: Loads the kernel and initramfs into memory and starts the kernel.
+   - Tools: GRUB, Syslinux, LILO, U-Boot.
+   - Purpose: Provides an interface to select the kernel to boot and passes necessary parameters.     
+   - Configuration: Requires files like ```grub.cfg``` or ```extlinux.conf``` to point to the kernel and initramfs.
+
+5. ***Device Tree Blob (Optional for Embedded Systems)***: Describes the hardware layout to the kernel (used on ARM or embedded devices).
+   - File: dtb
+   - Purpose: Provides information about hardware (e.g., memory, devices) not discoverable dynamically.
+   - How to Create: Use ```make dtbs``` during kernel build.      
+
+
 #  Requirements for Building and Using the Kernel
 ### compile and build kernel
 build a kernel: a compiler, a linker, and a make utility             
